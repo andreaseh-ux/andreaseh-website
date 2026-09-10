@@ -1,11 +1,15 @@
-# Andreas Holst — Portfolio
+# Andreas Holst — Website v5
 
-A dark editorial portfolio for Andreas Holst, visual creator and drone pilot.
+Updated portfolio package.
 
-## Replace the placeholders
-- Add approved hero/photo assets in an `assets/` folder.
-- Replace the placeholder media blocks in `index.html` with your videos/images.
-- Update `hello@andreasholst.no` to the preferred contact email if needed.
-
-## Deploy
-This is a static site and can be deployed directly to Vercel.
+- FPV drone
+- DJI Mavic 4 Pro
+- Sony α7 IV
+- Sports & action
+- Real estate
+- Hotels & destinations
+- Cabins & glamping
+- Events
+- Photography gallery with uncropped images
+- Video posters visible before click
+- Videos muted except Welcome to Norway
