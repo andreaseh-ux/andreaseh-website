@@ -21,7 +21,7 @@
 <div class="video-card" data-video="assets/videos/film-4.mp4" data-sound="0"><div class="video-thumb"><video muted playsinline preload="metadata" poster="posters/film-4.jpg" src="assets/videos/film-4.mp4"></video></div><div><span>04 · FPV / DRONE</span><strong>ADVENTURES CONTINUE</strong></div></div>
 <div class="video-card" data-video="assets/videos/film-5.mp4" data-sound="1"><div class="video-thumb"><video playsinline preload="metadata" poster="posters/film-5.jpg" src="assets/videos/film-5.mp4"></video></div><div><span>05 · FPV / DRONE</span><strong>WELCOME TO NORWAY</strong></div></div>
 <div class="video-card vertical" data-video="assets/videos/lauv.mp4" data-sound="0"><div class="video-thumb"><video muted playsinline preload="metadata" poster="assets/images/Bilde 24.10.2026, 16 17 57.jpg" poster="assets/images/Bilde 24.10.2026, 16 17 57.jpg" src="assets/videos/lauv.mp4"></video></div><div><span>06 · UNIQUE STAYS</span><strong>A TREEHOUSE IN NORWAY</strong></div></div>
-<div class="video-card featured" data-video="assets/videos/this-airbnb-in-norway.mp4" data-sound="0"><div class="video-thumb"><img class="video-poster" src="assets/images/this-airbnb-in-norway-poster.jpg" alt="Preview frame from the same Airbnb in Norway video"><video muted playsinline preload="metadata" poster="assets/images/this-airbnb-in-norway-poster.jpg" src="assets/videos/this-airbnb-in-norway.mp4"></video></div><div><span>07 · STAYS / DESTINATIONS</span><strong>THIS AIRBNB IN NORWAY</strong></div></div>
+<div class="video-card featured" data-video="assets/videos/this-airbnb-in-norway.mp4" data-sound="0"><div class="video-thumb"><img class="video-poster" alt="Preview frame from the same Airbnb in Norway video"><video muted playsinline preload="auto" src="assets/videos/this-airbnb-in-norway.mp4"></video></div><div><span>07 · STAYS / DESTINATIONS</span><strong>THIS AIRBNB IN NORWAY</strong></div></div>
 </div></section>
 <section id="gallery" class="gallery section"><div class="section-head"><div><p class="eyebrow">03 — FROM THE JOURNEY</p><h2>PLACES<br><em>WORTH SEEING.</em></h2></div><p class="section-intro">Photography from Norway, travel, properties, stays, sport and life on the road.</p></div><div class="photo-grid">
 <figure class="wide"><img src="assets/images/cabin.jpg" alt="Norwegian cabin in the mountains"><figcaption>STAYS / DESTINATIONS</figcaption></figure>
@@ -50,6 +50,26 @@
 </main>
 <div class="video-modal" id="videoModal" aria-hidden="true"><button class="video-close" aria-label="Close video">CLOSE ×</button><div class="video-modal-inner"><video id="modalVideo" controls playsinline></video></div></div>
 <footer><span>ANDREAS HOLST</span><span>TRAVEL · DRONE · CONTENT CREATOR</span><span>EXPLORE · CAPTURE · INSPIRE</span></footer><script>
+const airbnbCard=document.querySelector('.video-card[data-video="assets/videos/this-airbnb-in-norway.mp4"]');
+const airbnbVideo=airbnbCard?.querySelector('video');
+const airbnbPoster=airbnbCard?.querySelector('.video-poster');
+if(airbnbVideo&&airbnbPoster){
+  const captureAirbnbFrame=()=>{
+    if(!airbnbVideo.videoWidth||!airbnbVideo.videoHeight)return;
+    const canvas=document.createElement('canvas');
+    canvas.width=airbnbVideo.videoWidth;canvas.height=airbnbVideo.videoHeight;
+    const ctx=canvas.getContext('2d');
+    if(!ctx)return;
+    ctx.drawImage(airbnbVideo,0,0,canvas.width,canvas.height);
+    airbnbPoster.src=canvas.toDataURL('image/jpeg',0.92);
+  };
+  airbnbVideo.addEventListener('loadeddata',()=>{
+    try{airbnbVideo.currentTime=Math.min(0.2,Math.max(0,airbnbVideo.duration||0.2));}
+    catch{captureAirbnbFrame();}
+  },{once:true});
+  airbnbVideo.addEventListener('seeked',captureAirbnbFrame,{once:true});
+  airbnbVideo.addEventListener('loadeddata',captureAirbnbFrame,{once:true});
+}
 const modal=document.getElementById('videoModal');
 const mv=document.getElementById('modalVideo');
 const close=()=>{mv.pause();mv.removeAttribute('src');mv.load();modal.classList.remove('open');modal.setAttribute('aria-hidden','true');document.body.classList.remove('modal-open');};
